@@ -12,6 +12,7 @@ spring security
 		<v-main>
 			<v-container app>
 				<Main v-bind:query="query"/>
+				{{ users }}
 			</v-container>
 		</v-main>
 		<v-footer app>
@@ -22,7 +23,7 @@ spring security
 <script>
 import Bar from './components/Bar'
 import Main from './components/Main'
-//import Service from './service/service.js'
+import Service from './service/service.js'
 
 export default {
 	name: 'App',
@@ -30,7 +31,8 @@ export default {
 	data() {
 		return {
 			query: 'all-time',
-			user: null
+			user: null,
+			users: []
 		}
 	},
 	methods: {
@@ -39,7 +41,6 @@ export default {
 		},
 		login(user) {
 			this.user = user
-			console.log(this.user.name)
 		},
 		logout() {
 			this.user = null
@@ -47,6 +48,10 @@ export default {
 	},
 	created () {
 		this.$vuetify.theme.dark = true
+		Service.getUsers()
+			.then(response => {
+				this.users = response.data
+			})
 	}
 }
 </script>

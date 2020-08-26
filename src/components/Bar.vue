@@ -32,7 +32,7 @@
                     <Login v-bind:login="login"/>
                 </v-col>
                 <v-col>
-                    <Registration/>
+                    <Registration v-bind:login="login"/>
                 </v-col>
             </v-row>
         </div>

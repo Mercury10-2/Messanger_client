@@ -23,12 +23,16 @@ class Service {
         return axios.delete(`${API_URL}/${MESSAGES}/${id}`)
     }
 
+    getUsers() {
+        return axios.get(`${API_URL}/${USERS}`)
+    }
+
     verifyPassword(name, password) {
         return axios.get(`${API_URL}/${USERS}/${name}/${password}`)
     }
 
-    registration(name, password) {
-        return axios.post(`${API_URL}/${USERS}/${name}/${password}`)
+    registration(name, password, gender, email) {
+        return axios.post(`${API_URL}/${USERS}/${name}/${password}/${gender}/${email}`)
     }
 }
 

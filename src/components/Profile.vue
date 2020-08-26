@@ -24,7 +24,7 @@
                                 <p>Пол:</p>
                             </v-col>
                             <v-col cols="8">
-                                <p>{{ gender() }}</p>
+                                <p>{{ user.gender }}</p>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -55,6 +55,7 @@ export default {
     },
     methods: {
         gender() {
+            console.log(this.user.email)
             return this.user.gender == 'male' ? 'мужской' : 'женский'
         }
     }

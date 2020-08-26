@@ -14,12 +14,12 @@
                         {{ incorrectData }}
                         <v-row>
                             <v-col cols="12">
-                                <v-text-field label="Имя пользователя" v-model="username" placeholder="Имя пользователя" v-bind:rules="usernameRules"></v-text-field>
+                                <v-text-field label="Имя пользователя" v-model="username" v-bind:rules="usernameRules"></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="12">
-                                <v-text-field label="Пароль" v-model="password" placeholder="Пароль" v-bind:rules="passwordRules"></v-text-field>
+                                <v-text-field label="Пароль" v-model="password" v-bind:rules="passwordRules"></v-text-field>
                             </v-col>
                         </v-row>
                     </v-container>
@@ -68,9 +68,12 @@ export default {
                 Service.verifyPassword(this.username, this.password)
                     .then(response => {
                         let user = response.data
-                        console.log(response.data)
-                        if (user == null)                   //  Не работает, сервер кидает 500
-                            console.log('no user')
+                        if (user.verified == false) {
+                            if (user.error == 'name')
+                                this.incorrectData = 'Пользователь не найден'
+                            else
+                                this.incorrectData = 'Неверный пароль'
+                        }
                         else {
                             this.login(user)
                             this.dialog = false
