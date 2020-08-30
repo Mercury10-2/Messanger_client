@@ -11,7 +11,7 @@
             <v-card>
                 <v-card-text>
                     <v-container>
-                        {{ incorrectData }}
+                        <p class="deep-orange--text">{{ incorrectData }}</p>
                         <v-row>
                             <v-col cols="12">
                                 <v-text-field label="Имя пользователя" v-model="username" v-bind:rules="usernameRules"></v-text-field>
@@ -50,24 +50,30 @@ export default {
             password: '',
             usernameRules: [
                 v => !!v || 'Имя не может быть пустым',
-                v => (v && v.length <= 25) || 'Максимум 25 символов (у вас ' + v.length + ')'
+                v => (v && v.length <= 15) || 'Максимум 15 символов (у вас ' + v.length + ')'
             ],
             passwordRules: [
                 v => !!v || 'Пароль не может быть пустым',
-                v => (v && v.length <= 25) || 'Максимум 25 символов (у вас ' + v.length + ')'],
+                v => (v && v.length <= 10) || 'Максимум 10 символов (у вас ' + v.length + ')'],
             incorrectData: ''
         }
     },
     methods: {
         verifyPassword() {
-            if (this.username.length == 0 || this.username.length > 25)
-                this.incorrectData = 'Имя должно содержать от 1 до 25 символов'
-            else if (this.password.length == 0 || this.password.length > 25)
-                this.incorrectData = 'Пароль должен содержать от 1 до 25 символов'
+            if (this.username.length < 3)
+                this.incorrectData = 'Слишком короткое имя'
+            else if (this.username.length > 15)
+                this.incorrectData = 'Максимум 15 символов'
+            else if (this.password.length == 0 || this.password.length > 15)
+                this.incorrectData = 'Пароль должен содержать от 1 до 15 символов'
             else {
-                Service.verifyPassword(this.username, this.password)
+                const request = {
+                    "name":this.username,
+                    "password":this.password
+                }
+                Service.verifyPassword(request)
                     .then(response => {
-                        let user = response.data
+                        const user = response.data
                         if (user.verified == false) {
                             if (user.error == 'name')
                                 this.incorrectData = 'Пользователь не найден'
@@ -75,6 +81,7 @@ export default {
                                 this.incorrectData = 'Неверный пароль'
                         }
                         else {
+                            console.log(user)
                             this.login(user)
                             this.dialog = false
                         }

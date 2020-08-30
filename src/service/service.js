@@ -2,6 +2,7 @@
 import axios from 'axios'
 
 const API_URL = 'http://localhost:8080'
+const LOGIN = 'login'
 const MESSAGES = 'messages'
 const USERS = 'users'
 
@@ -26,9 +27,13 @@ class Service {
     getUsers() {
         return axios.get(`${API_URL}/${USERS}`)
     }
-
+/*
     verifyPassword(name, password) {
         return axios.get(`${API_URL}/${USERS}/${name}/${password}`)
+    }*/
+
+    verifyPassword(request) {
+        return axios.post(`${API_URL}/${LOGIN}`, request)
     }
 
     registration(name, password, gender, email) {

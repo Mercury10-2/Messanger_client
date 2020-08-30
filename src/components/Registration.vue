@@ -74,11 +74,11 @@ export default {
             email: '',
             usernameRules: [
                 v => !!v || 'Имя не может быть пустым',
-                v => (v && v.length <= 25) || 'Максимум 25 символов (у вас ' + v.length + ')'
+                v => (v && v.length <= 15) || 'Максимум 15 символов (у вас ' + v.length + ')'
             ],
             passwordRules: [
                 v => !!v || 'Пароль не может быть пустым',
-                v => (v && v.length <= 25) || 'Максимум 25 символов (у вас ' + v.length + ')'
+                v => (v && v.length <= 15) || 'Максимум 15 символов (у вас ' + v.length + ')'
             ],
             emailRules: [
                 v => !!v || 'Необходимо указать почтовый адрес',
@@ -89,10 +89,10 @@ export default {
     },
     methods: {
         registration() {
-            if (this.username.length == 0 || this.username.length > 25)
-                this.incorrectData = 'Имя должно содержать от 1 до 25 символов'
-            else if (this.password.length == 0 || this.password.length > 25)
-                this.incorrectData = 'Пароль должен содержать от 1 до 25 символов'
+            if (this.username.length < 3 || this.username.length > 15)
+                this.incorrectData = 'Имя должно содержать от 3 до 15 символов'
+            else if (this.password.length == 0 || this.password.length > 15)
+                this.incorrectData = 'Пароль должен содержать от 1 до 15 символов'
             else if (this.password != this.passwordCheck)
                 this.incorrectData = 'Пароли не совпадают'
             else if (!this.validateEmail())
